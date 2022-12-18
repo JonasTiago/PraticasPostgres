@@ -1,1 +1,10 @@
-SELECT  s.id, s.name school, courses.name course, companies.name company, roles.name role FROM jobs JOIN companies ON jobs."companyId" = companies.id JOIN applicants ON applicants."jobId" = jobs.id  JOIN users ON applicants."userId" = users.id JOIN educations ON users.id = educations."userId" JOIN schools s ON educations."schoolId" = s.id JOIN courses ON educations."courseId" = courses.id JOIN roles ON roles.name = 'Software Engineer' WHERE companies.id = 10 AND jobs.active IS TRUE;
+SELECT s.id AS "schoolId", s.name AS school, c.name AS course, co.name AS company, r.name AS role
+FROM educations e
+JOIN courses c ON e."courseId" = c.id
+JOIN schools s ON e."schoolId" = s.id
+JOIN users u ON e."userId" = u.id
+JOIN applicants a ON a."userId" = u.id
+JOIN jobs j ON a."jobId" = j.id
+JOIN companies co ON j."companyId" = co.id
+JOIN roles r ON j."roleId"= r.id
+WHERE co.id = 10 AND r.name = 'Software Engineer' AND j.active = true;
